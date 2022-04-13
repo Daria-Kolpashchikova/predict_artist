@@ -137,7 +137,7 @@ model.compile(optimizer=OPTIMIZER, loss='categorical_crossentropy', metrics=['ac
 
 VERBOSE = 1
 EPOCHS = 100
-"""
+
 print("Trainning Model ...\n")
 history = model.fit_generator(
     train_generator,
@@ -149,23 +149,5 @@ history = model.fit_generator(
     validation_steps=validation_steps,
     class_weight=class_weights
 )
-"""
-#model.save('D:/model')
 
-from keras.preprocessing import *
-
-model = tf.keras.models.load_model('D:/model')
-
-from PIL import Image
-train_input_shape = (224, 224, 3)
-test_image = image.load_img('D:/1.jpg', target_size=(train_input_shape[0:2]))
-
-test_image = image.img_to_array(test_image)
-test_image /= 255.
-test_image = np.expand_dims(test_image, axis=0)
-
-labels = train_generator.class_indices
-labels = dict((v,k) for k,v in labels.items())
-prediction = model.predict(test_image)
-prediction_idx = np.argmax(prediction)
-print("Predicted artist =", labels[prediction_idx+1].replace('_', ' '))
+model.save('D:/model')
